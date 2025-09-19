@@ -38,17 +38,20 @@ pipeline {
         echo 'Deployment Finished'
         }
         success {
-        optional: send email
-        mail to: 'paul.muchiri@student.moringaschool.com',
-        subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
-        body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
+        echo 'Deployment Successful!'
+            mail(
+                to: 'paul.muchiri@student.moringaschool.com',
+                subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
+                body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
+            )
         }
         failure {
-        echo 'Deployment Failed'
-        optional: send email
-        mail to: 'paul.muchiri@student.moringaschool.com',
-        subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
-        body: "The deployment failed. Check the details at ${env.BUILD_URL}"
+        echo 'Deployment Failed!'
+            mail(
+                to: 'paul.muchiri@student.moringaschool.com',
+                subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
+                body: "The deployment failed. Check the details at ${env.BUILD_URL}"
+            )
         }
     }
 }
