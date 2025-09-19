@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+
+  triggers {
+    // Auto-trigger on push from GitHub webhook
+    githubPush()
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'master', url: 'https://github.com/pmc-muchiri/gallery.git'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'npm install'
+          } else {
+            bat 'npm install'
+          }
+        }
+      }
+    }
+
+    stage('Deploy to Render') {
+      steps {
+        withCredentials([string(credentialsId: 'render-deploy-hook')]) {
+          script {
+            if (isUnix()) {
+              sh 'curl -X POST render-deploy-hook'
+            } else {
+              bat 'curl -X POST render-deploy-hook'
+            }
+          }
+        }
+      }
+    }
+  }
+
