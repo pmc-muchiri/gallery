@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   triggers {
-    // Auto-trigger on push from GitHub webhook
+    // auto push from GitHub webhook
     githubPush()
   }
 
@@ -15,28 +15,16 @@ pipeline {
 
     stage('Install Dependencies') {
       steps {
-        script {
-          if (isUnix()) {
-            sh 'npm install'
-          } else {
-            bat 'npm install'
-          }
-        }
+        sh 'npm install'
       }
     }
 
     stage('Deploy to Render') {
       steps {
-        withCredentials([string(credentialsId: 'render-deploy-hook')]) {
-          script {
-            if (isUnix()) {
-              sh 'curl -X POST render-deploy-hook'
-            } else {
-              bat 'curl -X POST render-deploy-hook'
-            }
-          }
+        withCredentials([string(credentialsId: 'render-deploy-hook', variable: 'DEPLOY_HOOK')]) {
+          sh 'curl -X POST $DEPLOY_HOOK'
         }
       }
     }
   }
-
+}
