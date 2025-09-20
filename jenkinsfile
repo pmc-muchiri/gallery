@@ -1,57 +1,60 @@
 pipeline {
-  agent any
-
-  triggers {
-    // auto push from GitHub webhook
-    githubPush()
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        git branch: 'master', url: 'https://github.com/pmc-muchiri/gallery.git'
-      }
-    }
-
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
-      }
-    }
-    stage('Running Test') {
-      steps {
-        sh 'npm test'
-      }
-    }
-
-    stage('Deploy to Render') {
-      steps {
-        withCredentials([string(credentialsId: 'render-deploy-hook', variable: 'DEPLOY_HOOK')]) {
-          sh 'curl -X POST $DEPLOY_HOOK'
+    agent any
+        tools {
+          nodejs 'nodejs-24'
         }
-      }
+
+    triggers {
+        githubPush()  // auto-trigger on GitHub push
     }
-    
-  }
-      post {
-    always {
-      echo 'Deployment Finished'
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/pmc-muchiri/gallery.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Running Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy to Render') {
+            steps {
+                withCredentials([string(credentialsId: 'render-deploy-hook', variable: 'DEPLOY_HOOK')]) {
+                    sh 'curl -X POST $DEPLOY_HOOK'
+                }
+            }
+        }
     }
-    success {
-      echo 'Deployment Successful!'
-      mail(
-        to: 'paul.muchiri@student.moringaschool.com',
-        subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
-        body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
-      )
+
+    post {
+        always {
+            echo 'Deployment Finished'
+        }
+        success {
+            // echo 'Deployment Successful!'
+            emailext(
+                to: 'paul.muchiri@student.moringaschool.com',
+                subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
+                body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
+            )
+        }
+        failure {
+            // echo 'Deployment Failed!'
+            emailext(
+                to: 'paul.muchiri@student.moringaschool.com',
+                subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
+                body: "The deployment failed. Check the details at ${env.BUILD_URL}"
+            )
+        }
     }
-    failure {
-      echo 'Deployment Failed!'
-      mail(
-        to: 'paul.muchiri@student.moringaschool.com',
-        subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
-        body: "The deployment failed. Check the details at ${env.BUILD_URL}"
-      )
-    }
-  }
 }
