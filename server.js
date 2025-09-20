@@ -2,7 +2,7 @@ const express = require('express');
 // const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ quiet: true, inject: {} });
 
 // Define routes
 let index = require('./routes/index');
@@ -27,7 +27,7 @@ const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLU
 
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI)
   .then(() => console.log('Database connected successfully!!'))
   .catch(err => console.error('MongoDB connection error:', err));
 
