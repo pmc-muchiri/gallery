@@ -18,7 +18,7 @@ const {
 
 const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER}/${MONGO_DB_DEV}?retryWrites=true&w=majority`;
 
-// Connect to MongoDB (Mongoose 6+ defaults are used; no warnings)
+// Connect to MongoDB 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Database connected successfully!!'))
   .catch(err => console.error('MongoDB connection error:', err));

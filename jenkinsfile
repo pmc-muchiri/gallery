@@ -1,11 +1,11 @@
 pipeline {
     agent any
         tools {
-          nodejs 'nodejs-24'
+          nodejs 'nodeJs-24'
         }
 
     triggers {
-        githubPush()  // auto-trigger on GitHub push
+        githubPush() // Trigger build on GitHub push
     }
 
     stages {
