@@ -9,6 +9,7 @@ const image = require('./routes/image');
 const app = express();
 
 // Build MongoDB URI from .env
+// test the variables are correctly loaded(testing pipeline)
 const {
   MONGO_USERNAME,
   MONGO_PASSWORD,
