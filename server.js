@@ -12,31 +12,45 @@ let image = require('./routes/image');
 const app = express();
 
 // connecting the database
-let mongodb_url = 'mongodb://localhost:27017/';
-let dbName = 'darkroom';
-// mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
-//     if (err) console.log(err)
-// });
-const env = process.env.NODE_ENV || 'development';
-const dbURI = config.mongoURI[env];
+// let mongodb_url = 'mongodb://localhost:27017/';
+// let dbName = 'darkroom';
+// // mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
+// //     if (err) console.log(err)
+// // });
+// const env = process.env.NODE_ENV || 'development';
+// const dbURI = config.mongoURI[env];
 
-console.log(`NODE_ENV = ${env}`);
-console.log(`Connecting to: ${dbURI}`);
+// console.log(`NODE_ENV = ${env}`);
+// console.log(`Connecting to: ${dbURI}`);
 
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log(`Database connected successfully [${env}]`))
-.catch(err => console.error('MongoDB connection error:', err));
-
-// test if the database has connected successfully
-// let db = mongoose.connection;
-// db.once('open', ()=>{
-//     console.log('Database connected successfully')
+// mongoose.connect(dbURI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
 // })
+// .then(() => console.log(`Database connected successfully [${env}]`))
+// .catch(err => console.error('MongoDB connection error:', err));
+
+// // test if the database has connected successfully
+// // let db = mongoose.connection;
+// // db.once('open', ()=>{
+// //     console.log('Database connected successfully')
+// // })
+
+// Build MongoDB URI from .env
+const {
+  MONGO_USERNAME,
+  MONGO_PASSWORD,
+  MONGO_CLUSTER,
+  MONGO_DB_DEV
+} = process.env;
+
+const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER}/${MONGO_DB_DEV}?retryWrites=true&w=majority`;
 
 
+// Connect to MongoDB
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('Database connected successfully!!'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 
 // View Engine
