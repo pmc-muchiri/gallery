@@ -6,7 +6,8 @@ Simple image gallery built with Express, EJS and MongoDB (Mongoose). Upload, vie
 
 Live demo: [https://gallery-7io0.onrender.com/](https://gallery-7io0.onrender.com/)
 
-Status: deployed on Render — verify uptime before sharing.
+- Deployed on Render
+- Verify uptime before sharing(free version).
 
 
 ## Features
@@ -110,3 +111,11 @@ Notes:
 
 ## License
 ISC
+
+## Author
+- Name: Paul Muchiri
+- Email: pmc.ac.ke@gmail.com
+- GitHub: https://github.com/pmc-muchiri/
+
+## Forked from
+This project was forked from [jonnygovish/gallery](https://github.com/jonnygovish/gallery).
