@@ -43,14 +43,15 @@ pipeline {
         success {
             emailext(
                 to: 'pmc.ac.ke@gmail.com',
-                subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
+                subject: "Build: ${currentBuild.fullDisplayName} succeeded!\n View deployed app: https://gallery-7io0.onrender.com",
                 body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
             )
 
             slackSend(
                 channel: '#paul_ip1',
                 tokenCredentialId: 'slack-webhook',
-                message: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} deployed successfully.\n${env.BUILD_URL}"
+                color: 'good',
+                message: "Build: ${currentBuild.fullDisplayName} succeeded!\n View deployed app: https://gallery-7io0.onrender.com"
             )
 
         }
@@ -66,6 +67,7 @@ pipeline {
             slackSend(
                 channel: '#paul_ip1',
                 tokenCredentialId: 'slack-webhook',
+                color: 'danger',
                 message: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} failed.\n${env.BUILD_URL}"
             )
 
