@@ -1,10 +1,5 @@
 const multer = require('multer');
 const path = require('path');
-const upload = require('../upload');
-
-
-
-
 
 // Set Storage engine
 const storage = multer.diskStorage({

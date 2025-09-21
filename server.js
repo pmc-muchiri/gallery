@@ -2,9 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const uploadRoute = require('./routes/upload');
-app.use('/upload', uploadRoute);
-
 require('dotenv').config({ quiet: true, inject: {} });
 
 const index = require('./routes/index');
