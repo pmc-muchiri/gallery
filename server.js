@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+
+const uploadRoute = require('./routes/upload');
+app.use('/upload', uploadRoute);
+
 require('dotenv').config({ quiet: true, inject: {} });
 
 const index = require('./routes/index');
@@ -18,7 +22,7 @@ const {
 
 const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER}/${MONGO_DB_DEV}?retryWrites=true&w=majority`;
 
-// Connect to MongoDB 
+// Connect to MongoDB using Mongoose
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Database connected successfully!!'))
   .catch(err => console.error('MongoDB connection error:', err));
