@@ -2,12 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
+const methodOverride = require('method-override');
+
+
 require('dotenv').config({ quiet: true, inject: {} });
 
 const index = require('./routes/index');
 const image = require('./routes/image');
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(methodOverride('_method'));
 
 // Build MongoDB URI from .env
 const {
