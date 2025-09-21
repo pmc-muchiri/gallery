@@ -56,12 +56,13 @@ pipeline {
         }
         // Failure deployment notification
         failure {
+            // email notification
             emailext(
                 to: 'paul.muchiri@student.moringaschool.com',
                 subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
                 body: "The deployment failed. Check the details at ${env.BUILD_URL}"
             )
-
+            // slack notification
             slackSend(
                 channel: '#devops-builds',
                 tokenCredentialId: 'slack-webhook',
