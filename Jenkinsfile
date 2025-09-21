@@ -7,7 +7,7 @@ pipeline {
     triggers {
         githubPush() // Trigger build on GitHub push
     }
-
+// Build Stages
     stages {
         stage('Checkout') {
             steps {
@@ -35,7 +35,7 @@ pipeline {
             }
         }
     }
-
+// Email Notifications
     post {
         always {
             echo 'Deployment Finished'
@@ -57,4 +57,22 @@ pipeline {
             )
         }
     }
+    // Slack Notifications
+    post {
+    success {
+        slackSend(
+            webhookUrl: credentials('slack-webhook'),
+            channel: '#devops-builds',
+            message: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} deployed successfully.\n${env.BUILD_URL}"
+        )
+    }
+    failure {
+        slackSend(
+            webhookUrl: credentials('slack-webhook'),
+            channel: '#devops-builds',
+            message: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} failed.\n${env.BUILD_URL}"
+        )
+    }
+}
+
 }
