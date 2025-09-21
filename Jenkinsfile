@@ -48,10 +48,11 @@ pipeline {
             )
 
             slackSend(
-                webhookUrl: credentials('slack-webhook'),
                 channel: '#devops-builds',
+                tokenCredentialId: 'slack-webhook',
                 message: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} deployed successfully.\n${env.BUILD_URL}"
             )
+
         }
         // Failure deployment notification
         failure {
@@ -62,10 +63,11 @@ pipeline {
             )
 
             slackSend(
-                webhookUrl: credentials('slack-webhook'),
                 channel: '#devops-builds',
+                tokenCredentialId: 'slack-webhook',
                 message: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} failed.\n${env.BUILD_URL}"
             )
+
         }
     }
 
