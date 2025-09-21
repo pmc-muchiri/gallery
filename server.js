@@ -26,6 +26,9 @@ const {
 
 const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER}/${MONGO_DB_DEV}?retryWrites=true&w=majority`;
 
+// silence deprecation warning
+mongoose.set('strictQuery', true);
+
 // Connect to MongoDB using Mongoose
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Database connected successfully!!'))
