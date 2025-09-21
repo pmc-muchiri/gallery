@@ -42,7 +42,7 @@ pipeline {
         // Success deployment notification
         success {
             emailext(
-                to: 'paul.muchiri@student.moringaschool.com',
+                to: 'pmc.ac.ke@gmail.com',
                 subject: "Successful Deployment: ${currentBuild.fullDisplayName}",
                 body: "The deployment was successful. Check the details at ${env.BUILD_URL}"
             )
@@ -58,7 +58,7 @@ pipeline {
         failure {
             // email notification
             emailext(
-                to: 'paul.muchiri@student.moringaschool.com',
+                to: 'pmc.ac.ke@gmail.com',
                 subject: "Failed Deployment: ${currentBuild.fullDisplayName}",
                 body: "The deployment failed. Check the details at ${env.BUILD_URL}"
             )
