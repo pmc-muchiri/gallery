@@ -48,7 +48,7 @@ pipeline {
             )
 
             slackSend(
-                channel: '#devops-builds',
+                channel: '#paul_ip1',
                 tokenCredentialId: 'slack-webhook',
                 message: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} deployed successfully.\n${env.BUILD_URL}"
             )
@@ -64,7 +64,7 @@ pipeline {
             )
             // slack notification
             slackSend(
-                channel: '#devops-builds',
+                channel: '#paul_ip1',
                 tokenCredentialId: 'slack-webhook',
                 message: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} failed.\n${env.BUILD_URL}"
             )
